@@ -52,7 +52,7 @@ Finds the index of the frame based upon location property.  URL may be a partial
 
 Example:
 
-	frameIndex = GASL.frameURLIndexOf('gomez_top[0]', 'checkoutanyware'); // => 2
+	frameIndex = GASL.frameIndexOf('gomez_top[0]', 'checkoutanyware'); // => 2
 
 #### randomSelector(targetWindow, Type, Selector)
 
