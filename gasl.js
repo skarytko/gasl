@@ -1,18 +1,23 @@
 /**
- * Creates a new Grasl global object.
- * @constructor 
- */ 
-Grasl = {};
+	All GASL methods and functions are defined inside of this namespace.
+
+	Gomez Advanced Scripting Library (GASL) is a library of functions that simplifies complex scripting techniques within the Gomez Recorder and Gomez Agents.
+
+	@namespace
+*/ 
+
+GASL = {};
 
 /** 
  * Generates a selector (CSS or DOM) with a random index.
  * 
- * @param {string} Name of the target window.
- * @param {string} Type of locator (CSS or DOM).
- * @param {string} Selector to find elements
+ * @param {string} targetWindow Name of the target window.
+ * @param {string} type The type of locator (CSS or DOM).
+ * @param {string} selector The selector to find the elements
  * @return {string} Selector string with random index
 */
-Grasl.randomSelector = function(targetWindow, type, selector) {
+
+GASL.randomSelector = function(targetWindow, type, selector) {
     var rndSelector = selector;
     
     var els = new Locator({
@@ -36,10 +41,11 @@ Grasl.randomSelector = function(targetWindow, type, selector) {
  * 
  * @param {object} target The target window and locators of the element to check.
  * @param {number} stepIndex The index of the step to skip.
- * @param {boolean} reverse 
+ * @param {boolean} [reverse=false] If set to true step will be skipped if element is found. 
  * @return {boolean} If step skiped return true.
 */
-Grasl.conditionalStep = function(target, stepIndex, reverse) {
+
+GASL.conditionalStep = function(target, stepIndex, reverse) {
     var els = [];
     
     try {
@@ -57,15 +63,14 @@ Grasl.conditionalStep = function(target, stepIndex, reverse) {
     return false;
 };
 
-// grasl.validateForVisibility = function(locator) {}
-
 /**
  * Dynamically executes type and wait actions.
  * 
  * @param {object} target The window and locators of the target element(s).
  * @param {string} text The text value to type.
 */
-Grasl.dynamicTyping = function(target, text) {
+
+GASL.dynamicType = function(target, text) {
 	var textValue = '';
     var charCodes = [];
 	
@@ -76,11 +81,14 @@ Grasl.dynamicTyping = function(target, text) {
       var type = new KeystrokesCommand({
 					"target": target,
 					"textValue": textValue,
-					"charCodes": charCodes
+					"keyCodes": charCodes,
+					"charCodes": charCodes,
+					"selectionStart": [],
+					"selectionEnd": []
 			});
       type.execute();
 
-			var timeWait = new Wait({ "criteria": "time", "absoluteMS": 1000 });
+			var timeWait = new Wait({ "criteria": "time", "absoluteMS": 500 });
       timeWait.execute();
     
 			var networkWait = new Wait({ "criteria": "network" });
@@ -91,16 +99,15 @@ Grasl.dynamicTyping = function(target, text) {
 };
 
 /**
- * Find the index of the frame that contains frame url and target window.
- * 
- * @param {string} url URL string to search with. 
- * @param {targetWindow} The target window of the desired frame.
- * @return {number} The index of the frame.
-*/
-Grasl.findFrameIndex = function(url, targetWindow) {
-    var frameIndex = null;
+	Finds the index of the frame that contains frame url and target window.
 
-    targetWindow = targetWindow || 'gomez_top[0]';
+	@param {string} targetWindow The target window to be searched.
+	@param {string} url The URL or partial URL of the frame. 
+	@return {number} The index of the frame. If no frame found returns null.
+*/
+
+GASL.frameIndexOf = function(targetWindow, url) {
+	var frameIndex = null;
 
 	var win = new Locator({
 			targetWindow: targetWindow,
@@ -108,10 +115,10 @@ Grasl.findFrameIndex = function(url, targetWindow) {
 	}).execute();
 
 	for(var i=0;i<win.frames.length;i++) {
-			var frameURL = window.frames[i].location;
-    
+			var frameURL = win.frames[i].location;
+
 			if (String(frameURL).indexOf(url) != -1) frameIndex = i;
 	}
-    
-    return frameIndex;
+	
+	return frameIndex;
 };
