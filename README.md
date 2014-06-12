@@ -62,6 +62,15 @@ Example
 
 	selector = GASL.randomSelector('gomez_top[0]', 'css', 'div.hproduct div.info-main h3 a'); // => "div.hproduct div.info-main h3 a:eq(3)"
 
+#### getCurrentStep()
+
+Gets the current Step object from the global script.
+
+Example
+
+	GASL.getCurrentStep().actions[1].target.targetWindow = "gomez_top[1]";
+
+
 ## Compatibility
 
 * FF Agent 13+

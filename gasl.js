@@ -1,5 +1,5 @@
 /**
-	All GASL methods and functions are defined inside of this namespace.
+    All GASL methods and functions are defined inside of this namespace.
 
 	Gomez Advanced Scripting Library (GASL) is a library of functions that simplifies complex scripting techniques within the Gomez Recorder and Gomez Agents.
 
@@ -121,4 +121,16 @@ GASL.frameIndexOf = function(targetWindow, url) {
 	}
 	
 	return frameIndex;
+};
+
+/**
+	Get the step object of the script.
+
+	@return {object} The current step object.
+*/
+
+GASL.getCurrentStep = function() {
+
+	return script.steps[external.currentStepIdx];
+
 };
