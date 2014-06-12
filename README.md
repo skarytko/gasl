@@ -20,9 +20,9 @@ When using methods within a Custom Action target scope must always be 'control'.
 
 ## Methods
 
-#### conditionalStep(target, stepIndex, [reverse=false])
+#### conditionalStep(target, [reverse=false])
 
-Skips all of the actions in the step depending on if element exists or not.
+Skips all of the actions in the current step depending on if element exists or not.  By default, if target does not exist, remaining actions within step will be skipped.
 
 Example:
 
@@ -33,7 +33,7 @@ Example:
             ['dom', 'document.getElementById("CardHolder")'],
             ['css', 'input[type="text"][name="account_holder_name"]']
         ]
-    }, 8);
+    });
 
 #### dynamicType(target, text)
 

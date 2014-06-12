@@ -37,7 +37,7 @@ GASL.randomSelector = function(targetWindow, type, selector) {
 };
 
 /**
- * Skips all of the actions in the step if element exists or does not exists.
+ * Skips all of the actions in the curent step if element exists or does not exists.
  * 
  * @param {object} target The target window and locators of the element to check.
  * @param {number} stepIndex The index of the step to skip.
@@ -45,22 +45,31 @@ GASL.randomSelector = function(targetWindow, type, selector) {
  * @return {boolean} If step skiped return true.
 */
 
-GASL.conditionalStep = function(target, stepIndex, reverse) {
-    var els = [];
+GASL.conditionalStep = function(target, reverse) {
+	
+  var els = [];
     
-    try {
+  try {
+		
 		els = new Locator(target).getElements();
+	
 	} catch(e) {}
     
   if (!els.length || (reverse && els.length > 0)) {
-		for(var i=0;i<script.steps[stepIndex].actions.length;i++) {
-			script.steps[stepIndex].actions[i].type = 'do not execute';
+		
+		// make sure to skip first action
+		for(var i=1;i<GASL.getCurrentStep().actions.length;i++) {
+		
+			GASL.getCurrentStep().actions[i].type = 'do not execute';
+		
 		}
-        
+     
 			return true;
-    }
     
-    return false;
+	}
+    
+  return false;
+	
 };
 
 /**
