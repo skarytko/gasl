@@ -9,7 +9,7 @@ Add the following code to the body of a Custom Action with a scope of 'control' 
 	importJS = new ImportJSCommand({
 	    name: 'gasl', 
 	    version: '', 
-	    url: 'https://raw.github.com/skarytko/gasl/master/gasl.min.js'
+	    url: 'https://raw.githubusercontent.com/skarytko/gasl/master/gasl.min.js'
 	}).execute();
 
 or...
